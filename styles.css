@@ -1,0 +1,83 @@
+/* General styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Contest styling */
+.contest {
+    background-color: #fafafa;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.contest:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.contest h2 {
+    font-size: 1.8em;
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+}
+
+.contest p {
+    font-size: 1em;
+    color: #7f8c8d;
+    margin: 5px 0;
+}
+
+/* Error message styling */
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+/* Additional responsive styling */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .contest h2 {
+        font-size: 1.5em;
+    }
+
+    .contest p {
+        font-size: 0.9em;
+    }
+}
