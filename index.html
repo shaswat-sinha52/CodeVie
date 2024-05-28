@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contest List</title>
+    <title>CodeVie</title>
     <style>
         body {
             font-family: 'Baloo Bhai 2', cursive, Arial, sans-serif;
@@ -32,7 +32,7 @@
             color: #FF5722;
         }
         nav {
-            background-color: linear-gradient(135deg, #5a70db, #F28A6D);
+            background: linear-gradient(135deg, #5a70db, #F28A6D);
             color: white;
             display: flex;
             justify-content: space-between;
@@ -51,6 +51,7 @@
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s, text-decoration 0.3s;
+            cursor: pointer;
         }
         nav a:hover {
             color: #eb9310;
@@ -78,6 +79,12 @@
             flex: 1;
             padding: 20px;
             text-align: center;
+        }
+        .content {
+            display: none;
+        }
+        .content.active {
+            display: block;
         }
         .contest {
             border: 1px solid #cccccc;
@@ -131,7 +138,6 @@
             bottom: 100px;
             right: 100px;
         }
-        
     </style>
 </head>
 <body>
@@ -144,19 +150,33 @@
     </header>
     <nav>
         <div class="links">
-            <a href="#home"><u>Home</u></a>
-            <a href="#aboutus"><u>About Us</u></a>
-            <a href="#contact"><u>Contact Us</u></a>
+            <a id="home-link"><u>Home</u></a>
+            <a id="about-link"><u>About Us</u></a>
+            <a id="contact-link"><u>Contact Us</u></a>
         </div>
         <div class="search-bar">
             <input type="text" id="search" placeholder="Enter Contest Name..">
         </div>
     </nav>
     <main>
-        <div class="container">
-            <h1>Welcome to CodeVie</h1>
-            <p><b>Contest Calendar</b>: Discover and Participate in Coding Challenges</p>
-            <div id="contest-list"></div>
+        <div id="home" class="content active">
+            <div class="container">
+                <h1>Welcome to CodeVie</h1>
+                <p><b>Contest Calendar</b>: Discover and Participate in Coding Challenges</p>
+                <div id="contest-list"></div>
+            </div>
+        </div>
+        <div id="about" class="content">
+            <div class="container">
+                <h1>About Us</h1>
+                <p>Welcome to CodeVie, a premier platform dedicated to coders and programming enthusiasts worldwide. Our mission is to provide a centralized hub where users can discover, participate in, and stay updated on the latest coding contests and challenges. At CodeVie, we understand the importance of competitive programming in honing skills, fostering innovation, and building a strong coding community. Our platform offers an extensive contest calendar, real-time updates, and a user-friendly interface designed to streamline your search for coding competitions. Whether you're a seasoned programmer or a novice looking to test your skills, CodeVie is here to support your journey. Join us and become a part of a dynamic community that thrives on coding excellence.</p>
+            </div>
+        </div>
+        <div id="contact" class="content">
+            <div class="container">
+                <h1>Contact Us</h1>
+                <p>For inquiries, please email us at devfeedback2024@gmail.com</p>
+            </div>
         </div>
     </main>
     <footer>
@@ -168,22 +188,20 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const contestList = document.getElementById("contest-list");
-        
-            let users=[]
+            let users = [];
             const now = new Date().toISOString();
-            const searchinput=document.querySelector("#search")
-            searchinput.addEventListener("input",(e)=>{
-                const value=e.target.value.toLowerCase()
-                users.forEach(contest =>{
-                    const isvisible = contest.title && contest.title.toLowerCase().includes(value);
-                    contest.Element.classList.toggle("hide", !isvisible);
-        
-                })
-            })
-        
-            
+            const searchInput = document.querySelector("#search");
+
+            searchInput.addEventListener("input", (e) => {
+                const value = e.target.value.toLowerCase();
+                users.forEach(contest => {
+                    const isVisible = contest.title && contest.title.toLowerCase().includes(value);
+                    contest.Element.classList.toggle("hide", !isVisible);
+                });
+            });
+
             const apiUrl = `https://clist.by/api/v4/contest/?username=Shaswat_78&api_key=733fd04bf4419f8b5a7fc837c9978ffcd43c316d&start__gt=${now}`;
-        
+            
             fetch(apiUrl)
                 .then(response => {
                     if (!response.ok) {
@@ -192,59 +210,65 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log("API response:", data); 
-        
+                    console.log("API response:", data);
                     if (!data.objects || !Array.isArray(data.objects)) {
                         throw new Error("Unexpected API response structure");
                     }
-        
                     let contests = data.objects;
-        
-                    
                     contests.sort((a, b) => new Date(a.start) - new Date(b.start));
-        
+
                     if (contests.length === 0) {
                         contestList.innerHTML = "<p>No contests available at the moment.</p>";
                     } else {
                         contestList.innerHTML = "";
-                        users=contests.map(contest => {
+                        users = contests.map(contest => {
                             const contestElement = document.createElement("div");
                             contestElement.className = "contest";
-        
                             const contestTitle = document.createElement("h2");
                             contestTitle.textContent = contest.event || "No title";
-        
                             const contestDetails = document.createElement("p");
                             contestDetails.innerHTML = `Host: <a href="${contest.href || '#'}" target="_blank">${contest.host || "Unknown"}</a>`;
-        
                             const contestDuration = document.createElement("p");
-                            const durationInMinutes = Math.round(contest.duration / 60); 
+                            const durationInMinutes = Math.round(contest.duration / 60);
                             contestDuration.textContent = `Duration: ${durationInMinutes} minutes`;
-        
                             const contestStart = document.createElement("p");
                             contestStart.textContent = `Starts at: ${contest.start ? new Date(contest.start).toLocaleString() : "Unknown"}`;
-        
                             const contestEnd = document.createElement("p");
                             contestEnd.textContent = `Ends at: ${contest.end ? new Date(contest.end).toLocaleString() : "Unknown"}`;
-        
+
                             contestElement.appendChild(contestTitle);
                             contestElement.appendChild(contestDetails);
                             contestElement.appendChild(contestDuration);
                             contestElement.appendChild(contestStart);
                             contestElement.appendChild(contestEnd);
-        
+
                             contestList.appendChild(contestElement);
-                            return{title:contest.event,details:contest.host,duration:contest.duration,start:contest.start,end:contest.end,Element:contestElement}
-                            
+                            return { title: contest.event, details: contest.host, duration: contest.duration, start: contest.start, end: contest.end, Element: contestElement };
                         });
                     }
                 })
                 .catch(error => {
-                    console.error("Error fetching contests:", error ,"Check Your Internet Connection");
+                    console.error("Error fetching contests:", error, "Check Your Internet Connection");
                     contestList.innerHTML = `<p class="error">Error fetching contests: ${error.message}</p>`;
                 });
+
+            
+            const homeLink = document.getElementById('home-link');
+            const aboutLink = document.getElementById('about-link');
+            const contactLink = document.getElementById('contact-link');
+            const sections = document.querySelectorAll('.content');
+
+            homeLink.addEventListener('click', () => showSection('home'));
+            aboutLink.addEventListener('click', () => showSection('about'));
+            contactLink.addEventListener('click', () => showSection('contact'));
+
+            function showSection(sectionId) {
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(sectionId).classList.add('active');
+            }
         });
-        
     </script>
 </body>
 </html>
