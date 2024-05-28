@@ -41,9 +41,11 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            flex-wrap: wrap;
         }
         nav .links {
             display: flex;
+            flex-wrap: wrap;
         }
         nav a {
             color: rgb(5, 6, 4);
@@ -60,6 +62,7 @@
         nav .search-bar {
             display: flex;
             align-items: center;
+            margin-top: 10px;
         }
         nav input[type="text"] {
             padding: 10px;
@@ -137,6 +140,23 @@
             height: 100px;
             bottom: 100px;
             right: 100px;
+        }
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+            nav .search-bar {
+                width: 100%;
+                justify-content: center;
+            }
+            nav input[type="text"] {
+                width: 100%;
+                margin-top: 10px;
+            }
+            nav .links {
+                justify-content: center;
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
