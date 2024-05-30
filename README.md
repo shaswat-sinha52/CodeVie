@@ -1,6 +1,9 @@
 # CodeVie
+
+
 **Do visit our website:-**
-[CodeVie]([https://www.openai.com](https://codevie.freewebhostmost.com/))
+[CodeVie](https://codevie.freewebhostmost.com/ "CodeVie homepage")
+
 
 
 This is a simple web application that fetches upcoming coding contests.
