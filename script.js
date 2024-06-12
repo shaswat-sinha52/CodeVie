@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    const USERNAME="Shaswat_78";
-    const API_KEY="733fd04bf4419f8b5a7fc837c9978ffcd43c316d";
+    const USERNAME=// add your username;
+    const API_KEY=// add your api key;
     const apiUrl =`https://clist.by/api/v4/contest/?username=${USERNAME}&api_key=${API_KEY}&start__gt=${now}`;
     
     fetch(apiUrl)
