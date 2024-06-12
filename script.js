@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const USERNAME=// add your username;
     const API_KEY=// add your api key;
-    const apiUrl =`https://clist.by/api/v4/contest/?username=${USERNAME}&api_key=${API_KEY}&start__gt=${now}`;
+    const apiUrl =//combine username,apikey,baseurl to get your api url;
     
     fetch(apiUrl)
         .then(response => {
